@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Default priority ladder (Critical → Low) -->
+        <record id="priority_critical" model="fms.helpdesk.priority">
+            <field name="name">Critical</field>
+            <field name="code">critical</field>
+            <field name="sequence">1</field>
+            <field name="is_urgent">True</field>
+            <field name="color">1</field>
+        </record>
+        <record id="priority_high" model="fms.helpdesk.priority">
+            <field name="name">High</field>
+            <field name="code">high</field>
+            <field name="sequence">2</field>
+            <field name="is_urgent">True</field>
+            <field name="color">2</field>
+        </record>
+        <record id="priority_medium" model="fms.helpdesk.priority">
+            <field name="name">Medium</field>
+            <field name="code">medium</field>
+            <field name="sequence">3</field>
+            <field name="color">4</field>
+        </record>
+        <record id="priority_low" model="fms.helpdesk.priority">
+            <field name="name">Low</field>
+            <field name="code">low</field>
+            <field name="sequence">4</field>
+            <field name="color">10</field>
+        </record>
+
+        <!-- Escalation levels -->
+        <record id="escalation_level_1" model="fms.helpdesk.escalation.level">
+            <field name="name">Level 1 - Team Supervisor</field>
+            <field name="level">1</field>
+            <field name="owner_type">team_lead</field>
+        </record>
+        <record id="escalation_level_2" model="fms.helpdesk.escalation.level">
+            <field name="name">Level 2 - Helpdesk Manager</field>
+            <field name="level">2</field>
+            <field name="owner_type">user</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+        <record id="escalation_level_3" model="fms.helpdesk.escalation.level">
+            <field name="name">Level 3 - Facility Manager</field>
+            <field name="level">3</field>
+            <field name="owner_type">user</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+        <record id="escalation_level_4" model="fms.helpdesk.escalation.level">
+            <field name="name">Level 4 - Management</field>
+            <field name="level">4</field>
+            <field name="owner_type">user</field>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="priority_critical" model="fms.helpdesk.priority">
+            <field name="escalation_level_id" ref="escalation_level_2"/>
+        </record>
+        <record id="priority_high" model="fms.helpdesk.priority">
+            <field name="escalation_level_id" ref="escalation_level_1"/>
+        </record>
+
+    </data>
+</odoo>

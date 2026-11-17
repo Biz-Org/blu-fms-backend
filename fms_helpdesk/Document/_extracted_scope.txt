@@ -1,0 +1,476 @@
+===== FUNCTIONAL SCOPE =====
+FUNCTIONAL SCOPE DOCUMENT
+Complaint & HelpdeskManagement
+Facility Management System (FMS)
+Functional scope, workflows, screens, roles, controls, reports and implementation baseline
+Document
+Complaint & Helpdesk Management – Functional Scope
+Version
+1.0
+Prepared For
+Facility Management System
+Scope Basis
+FMS Updated 37-Module Functional Documentation
+1. Purpose and Scope
+Complaint & Helpdesk Management provides a centralized workflow for receiving, classifying, routing, assigning, monitoring, escalating, resolving and closing resident complaints and service requests. The module also provides SLA monitoring, resident feedback and operational reporting.
+Primary objectives
+Provide one controlled place to register and track resident complaints/service requests.
+Automatically classify and route tickets to the appropriate support team and staff member.
+Apply priority and SLA rules consistently.
+Give helpdesk teams a practical work queue for daily operations.
+Escalate critical, overdue or SLA-risk tickets.
+Record resolution, verification, closure and resident feedback.
+Provide management with complaint, SLA, escalation, resolution and satisfaction analytics.
+2. Source-Aligned Functional Baseline
+The uploaded FMS documentation places Complaint & Helpdesk Management at module #10 in the updated 37-module architecture. Its Helpdesk scope is defined around resident complaints and service requests.
+Source Feature
+Scope Treatment
+Primary UI Coverage
+Complaint Tracking
+Central ticket lifecycle, search, filters, status and history
+Complaints / Tickets + Ticket Details
+Category-Based Routing
+Category/subcategory rules route tickets to team/staff
+Categories + Routing Rules
+SLA Timers
+Response/resolution targets, status and breach monitoring
+Priority & SLA + Ticket Details
+Photo Uploads
+Complaint evidence and resolution attachments
+Create Ticket + Ticket Details
+Ticket Creation
+Resident/staff complaint registration
+Create Ticket
+Ticket Assignment
+Team and staff ownership
+Work Queue + Assignment Management
+Priority Management
+Critical/High/Medium/Low and targets
+Priority & SLA
+Escalation Management
+At-risk/breached/manual escalation
+Escalation Management
+Resolution Tracking
+Resolution, verification and closure
+Resolution & Closure + Ticket Details
+Resident Feedback / Rating
+Post-resolution satisfaction and comments
+Resident Feedback
+3. Recommended Primary UI Set
+The project is designed around 15 primary UIs. Supporting actions such as Add Category, Create Rule, Add SLA Policy, Assign/Reassign, Add Resolution and Close Ticket are implemented as drawers, modals, dialogs, tabs or sections within the relevant primary UI.
+#
+Primary UI
+Purpose
+01
+Helpdesk Dashboard
+Operational overview and quick actions
+02
+Complaints / Tickets
+Central ticket list and lifecycle actions
+03
+Create Ticket
+Create a new complaint/service request
+04
+My Complaints
+Resident view of submitted complaints
+05
+Work Queue
+Daily operational queue for support teams
+06
+Assignment Management
+Assign and reassign ticket ownership
+07
+Categories Management
+Manage categories and subcategories
+08
+Routing Rules
+Configure automatic ticket routing
+09
+Priority & SLA Management
+Configure priorities, SLA policies and thresholds
+10
+Escalation Management
+Manage escalated and SLA-risk tickets
+11
+Resolution & Closure
+Resolve, verify and close tickets
+12
+Resident Feedback
+Collect and review resident ratings/comments
+13
+Complaint / Ticket Details
+Complete 360° ticket view and history
+14
+Reports & Analytics
+Operational and management reporting
+15
+Helpdesk Settings
+Module-level configuration
+4. Detailed Functional Scope
+4.1 Helpdesk Dashboard
+Show total, new, open, in-progress, unassigned, resolved and closed tickets.
+Show SLA on-track, at-risk and breached counts.
+Show high/critical priority workload and pending assignments.
+Show complaint trends and category/priority summaries.
+Show support team/assignee workload and recent activity.
+Provide quick actions for Create Ticket, Complaints, Work Queue, SLA Breaches, Escalations and Reports.
+4.2 Complaints / Tickets
+Search and filter by ticket ID, title, resident, property, unit, category, subcategory, priority, status, team, assignee, SLA status and date.
+Display ticket ID, complaint title, resident, unit, category, priority, team, assignee, SLA and current status.
+Open Ticket Details.
+Edit ticket information where authorized.
+Assign/reassign, change priority, add update/comment, add attachment, escalate, resolve, close and reopen where permitted.
+4.3 Create Ticket
+Capture complaint title and description.
+Select resident, contact, property/building/unit and complaint location.
+Select category and subcategory.
+Set or derive priority.
+Upload photos/documents with preview and remove controls.
+Capture optional contact/visit information and notes.
+Generate unique Ticket ID on submission.
+Apply routing, assignment, SLA and notifications after submission.
+4.4 My Complaints
+Show complaints submitted by the logged-in resident/user.
+Search and filter by status, category and date.
+Show current status, assigned team, SLA, updates, attachments and resolution.
+Allow additional information/attachment updates where permitted.
+Allow resident feedback after resolution/closure.
+4.5 Work Queue
+Provide My Queue, Unassigned, Team Queue, Due Soon, SLA Breached and All Open views.
+Show queue counts for open, unassigned, due-soon, breached and high-priority work.
+Support search, filters, sorting and refresh.
+Allow authorized users to assign, reassign, open, update, escalate and resolve tickets.
+4.6 Assignment Management
+View unassigned, assigned and reassigned tickets.
+Assign a ticket to a support team and staff member.
+Reassign ownership and capture reason when required.
+Support controlled bulk assignment.
+Show assignment history and team workload.
+4.7 Categories Management
+Create, edit, activate and deactivate complaint categories.
+Create and manage subcategories.
+Maintain descriptions and default support team.
+Display subcategory/routing-rule counts.
+Search and filter categories.
+Add Category UI should include category name, description, status, subcategories, default team/assignee and routing option.
+4.8 Routing Rules
+Create, edit, activate/deactivate and manage routing rules.
+Define conditions using category, subcategory, priority and supported attributes.
+Route to support team and optionally a specific assignee.
+Apply an SLA policy through the routing rule.
+Define rule order/priority.
+Provide Test Routing to simulate a sample complaint.
+Maintain rule status and history.
+4.9 Priority & SLA Management
+Maintain Critical, High, Medium and Low priority levels.
+Configure response and resolution targets per priority/policy.
+Configure escalation level/trigger.
+Configure business hours and 24x7 handling where applicable.
+Configure SLA pause conditions such as Awaiting Resident, With Vendor and Pending Approval.
+Display On Track, At Risk/Warning, Breached and Completed.
+Provide Add/Edit SLA Policy UI and SLA Simulator.
+4.10 Escalation Management
+Show active, at-risk and breached escalations.
+Support manual and rule-driven escalation.
+Assign escalation to the appropriate owner.
+Support configured escalation levels.
+Capture reason, comments, owner and timestamps.
+Notify relevant users.
+Track escalation progress and history.
+4.11 Resolution & Closure
+List tickets needing resolution, awaiting verification and ready to close.
+Add resolution description and work performed.
+Upload resolution evidence.
+Record resolved by and resolution date/time.
+Submit resolution for verification where configured.
+Verify resolution.
+Close ticket with closure reason/comments.
+Allow reopening under configured business rules.
+4.12 Resident Feedback
+Trigger feedback request after resolution/closure where configured.
+Capture rating and comments.
+Track Pending, Submitted and Reviewed states.
+Display feedback history and ratings.
+Identify low-rated resolutions for management follow-up.
+4.13 Complaint / Ticket Details
+Provide complete ticket information: ID, title, description, resident, property, unit, category, subcategory and priority.
+Show team, assignee and assignment history.
+Show response/resolution SLA, remaining time, SLA status and breach details.
+Show activity timeline for status changes, comments, assignments, escalations, resolution and closure.
+Show photo/document attachments.
+Provide authorized actions: Edit, Assign, Reassign, Change Priority, Add Update, Add Attachment, Escalate, Add Resolution, Verify, Close and Reopen.
+4.14 Reports & Analytics
+Complaint volume by date, property, category, subcategory and status.
+SLA compliance, breaches, at-risk tickets, average response time and average resolution time.
+Tickets by support team and assignee, unassigned tickets and reassignment counts.
+Escalation counts by level/reason and escalation resolution time.
+Resolution rate, reopened complaints and average resolution time.
+Resident rating and feedback trends.
+Support filters for property, building, unit, category, priority, team, assignee, status, SLA status and date range.
+Support controlled export to PDF/Excel/CSV where required.
+4.15 Helpdesk Settings
+Configure ticket numbering and default status.
+Configure default priority and category behaviour.
+Configure assignment defaults.
+Configure SLA defaults, business hours and pause rules.
+Configure escalation defaults.
+Configure notification preferences.
+Configure attachment, reopening and closure rules.
+5. Supporting Action UIs
+Every visible action button must have a defined usable UI. These are supporting UIs, not additional main navigation screens.
+Action
+UI Type
+Required Behaviour
+Create / Edit Ticket
+Form / drawer
+Resident, location, category, priority, description, attachments, status, save/cancel.
+Assign / Reassign Ticket
+Drawer / modal
+Current owner, team, new staff, reason and confirmation.
+Add Category
+Drawer / modal
+Category name, description, status, subcategories, default team/assignee and routing option.
+Add / Edit Subcategory
+Drawer / modal
+Parent category, name, description and status.
+Create / Edit Routing Rule
+Drawer / modal
+Rule name, conditions, team, assignee, SLA, order and status.
+Test Routing
+Drawer / modal
+Sample ticket attributes, evaluated rule and resulting team/assignee/SLA.
+Add / Edit SLA Policy
+Drawer / modal
+Policy, priority, response/resolution targets, business hours, pause conditions and escalation.
+SLA Simulator
+Drawer / modal
+Scenario inputs and calculated response/resolution deadlines.
+Escalate Ticket
+Drawer / modal
+Reason, escalation level, owner, comments and notify action.
+Add Resolution
+Drawer / modal
+Resolution, work performed, attachments, resolved-by information and submit.
+Verify Resolution
+Dialog / drawer
+Resolution summary, verification result, remarks and next status.
+Close Ticket
+Confirmation dialog
+Closure summary, reason/comments and confirm close.
+Reopen Ticket
+Confirmation dialog
+Reopen reason, remarks and confirm reopen.
+Resident Feedback
+Form / modal
+Rating, comment, submit and confirmation.
+Attachment Upload
+Inline / drawer
+Upload, preview, remove and validation.
+Comment / Activity Update
+Inline / drawer
+Comment, optional attachment and submit.
+6. End-to-End Business Workflow
+Complaint is identified by a resident or authorized staff member.
+Ticket is created with resident/location details, category, description and optional photo/document evidence.
+System generates a unique Ticket ID.
+Category/subcategory and priority are assigned or derived.
+Routing rules are evaluated.
+Ticket is routed to the configured support team and staff member where applicable.
+Applicable SLA policy is attached and response/resolution timers start.
+Ticket appears in the appropriate Work Queue.
+Assigned staff works on the complaint and records updates, comments and attachments.
+SLA is monitored as On Track, At Risk/Warning or Breached.
+If escalation conditions are met, the ticket is escalated to the configured level/owner.
+Staff records the resolution and supporting evidence.
+Resolution is verified where required.
+Ticket is closed according to closure rules.
+Resident feedback/rating is collected where configured.
+Ticket, SLA, escalation, resolution and feedback data become available for reporting.
+7. Exception and Alternate Workflows
+Unassigned complaint
+Ticket created → no valid assignment → Work Queue → manual assignment → continue SLA under configured rules.
+SLA at risk
+Ticket active → SLA approaching → warning/at-risk → alert → corrective action or escalation.
+SLA breach
+Target missed → breached → escalation → escalation owner action → resolution.
+Reassignment
+Assigned → reassign → new team/staff → assignment history updated → notification as configured.
+Awaiting Resident / Vendor
+Ticket enters waiting state → SLA pauses if configured → response received → SLA resumes → work continues.
+Reopened complaint
+Closed/resolved → authorized reopen → reason captured → ticket returns to configured working state.
+8. Ticket Status Lifecycle
+Baseline lifecycle: NEW → OPEN → ASSIGNED → IN PROGRESS → RESOLVED → AWAITING VERIFICATION → CLOSED
+Optional working states: Pending, Awaiting Resident, With Vendor, Escalated.
+Reopen path: CLOSED → REOPENED → IN PROGRESS.
+Status transitions must be controlled by role and configuration.
+9. SLA Lifecycle
+Ticket Created → SLA Applied → Timer Started → On Track.
+As the target approaches, the ticket can become At Risk/Warning.
+If the target is missed, the ticket becomes Breached and may trigger escalation.
+If the target is completed, the SLA is marked Completed.
+Configured waiting states may pause the timer and resume it when the condition ends.
+10. Routing Workflow
+Ticket Created → Category → Subcategory → Priority → Routing Rule Evaluation → Support Team → Assignee → SLA Policy → Work Queue
+Example: Plumbing + Water Leakage + High → Plumbing Team → Rahul Patil → High Priority SLA
+11. Roles and Responsibilities
+Role
+Responsibilities
+Resident
+Create complaint, track complaint, provide information, verify resolution where configured and submit feedback.
+Helpdesk Agent
+Create/update tickets, classify complaints, communicate, work assigned tickets and record resolution.
+Support Team Lead
+Manage queue, assign/reassign, monitor SLA and coordinate escalations.
+Facility Manager
+Monitor operational performance, escalations, SLA compliance and resolutions.
+Helpdesk Administrator
+Manage categories, routing rules, priorities, SLA policies and settings.
+Management
+Review reports, KPIs, SLA performance, escalations and resident satisfaction.
+12. Notifications and Alerts
+Resident-facing
+Ticket created / Ticket ID generated.
+Ticket assigned.
+Ticket status changed.
+Additional information requested.
+Ticket escalated.
+Ticket resolved.
+Ticket closed.
+Feedback request.
+Staff / management
+Ticket assigned/reassigned.
+High/Critical ticket created.
+SLA approaching / At Risk.
+SLA breached.
+Escalation assigned.
+Resident response received.
+13. Audit Trail and History
+Record ticket creation, edits and status changes.
+Record category, priority and assignment changes.
+Record comments, attachments, escalations, resolution, verification, closure, reopening and feedback.
+Store user, date/time, action, previous value, new value and remarks where applicable.
+Expose relevant history in Ticket Details.
+14. Integration Considerations
+FMS Area
+Integration Purpose
+Resident Management
+Resident profile, contact details and resident identity.
+Property / Apartment / Unit
+Property, building, floor, unit and location context.
+Maintenance Management
+Create/link maintenance request or work order when physical maintenance is required.
+Vendor & Contractor Management
+Support vendor assignment and vendor-dependent resolution where applicable.
+Inventory / Store
+Downstream maintenance processes may consume spare/material information.
+Mobile Application
+Expose resident/staff helpdesk functions through mobile; source explicitly lists Mobile Helpdesk.
+15. Reports and KPI Catalogue
+KPI Area
+Measures
+Complaint KPIs
+Total, new, open, closed, category-wise, property-wise and trend analysis.
+SLA KPIs
+SLA compliance %, breaches, at-risk tickets, average response time and average resolution time.
+Operational KPIs
+Unassigned tickets, tickets by team/staff, reassignment rate and workload.
+Escalation KPIs
+Escalation count, level, reason and average escalation resolution time.
+Resolution KPIs
+Resolution rate, reopened complaints, first-time resolution where supported and average resolution time.
+Resident Experience
+Average rating, feedback response rate, low-rating count and satisfaction by team/category.
+16. Business Controls and Validation
+Only authorized users can create, assign, escalate, resolve, verify, close, reopen or configure tickets.
+Category/subcategory combinations must be valid.
+Routing rules must have a deterministic evaluation order.
+SLA policy must be applicable to the ticket context.
+Ticket ID must be unique.
+Required fields must be validated before submission.
+Attachment type and size must follow configured limits.
+Closure should require resolution information.
+Reopening should require authorization and a reason.
+Audit history should be protected from normal operational editing.
+Dashboard/report figures should use the same lifecycle data as operational screens.
+17. Scope Boundaries
+Included:
+Resident complaint/service-request lifecycle.
+Ticket creation, tracking, assignment, routing, priority, SLA, escalation, resolution, closure and feedback.
+Operational dashboards, work queues and reports.
+Categories, routing, priorities, SLA and helpdesk settings.
+Attachments/photos and activity history.
+Remain owned by dedicated FMS modules:
+Detailed maintenance execution, work orders, technicians and spare consumption.
+Resident master data.
+Property/unit master data.
+Vendor master and contractual administration.
+Cross-module accounting/payment processing.
+18. Development and UAT Baseline
+Use the 15 primary UIs as the main navigation/screen baseline.
+Design supporting action UIs for every visible Create/Add/Edit/Assign/Reassign/Escalate/Resolve/Verify/Close/Reopen/Test action.
+Implement role-based visibility and action permissions.
+Use the ticket and SLA lifecycles as the baseline for backend models and APIs.
+Prepare tests for normal, SLA-risk, breach, escalation, reassignment, waiting-state, resolution, closure, reopening and feedback scenarios.
+Validate dashboard/report numbers against operational ticket data.
+Finalize detailed BRD/SRS, API mapping, data model and UAT cases during implementation.
+19. Final Scope Summary
+The Complaint & Helpdesk Management module is a complete complaint-to-closure workflow, not simply a ticket list. It contains 15 primary UIs supported by action drawers/modals and embedded tabs/sections.
+End-to-end flow: Create → Track → Categorize → Route → Assign → Prioritize → SLA Monitor → Work → Escalate if required → Resolve → Verify → Close → Feedback → Report
+All ten Helpdesk feature areas explicitly listed in the uploaded FMS documentation are represented in this scope.
+20. Source Reference
+Primary source: FMS_Updated_37_Module_Functional_Documentation.docx. The source identifies Complaint & Helpdesk Management as module #10 and lists the ten Helpdesk feature areas used as the baseline for this document.
+
+===== SCREEN PPT =====
+=== SLIDE 1 ===
+
+
+=== SLIDE 2 ===
+
+
+=== SLIDE 3 ===
+
+
+=== SLIDE 4 ===
+
+
+=== SLIDE 5 ===
+
+
+=== SLIDE 6 ===
+
+
+=== SLIDE 7 ===
+
+
+=== SLIDE 8 ===
+
+
+=== SLIDE 9 ===
+
+
+=== SLIDE 10 ===
+
+
+=== SLIDE 11 ===
+
+
+=== SLIDE 12 ===
+
+
+=== SLIDE 13 ===
+
+
+=== SLIDE 14 ===
+
+
+=== SLIDE 15 ===
+
+
+=== SLIDE 16 ===
+
+
+=== SLIDE 17 ===
+
+
+=== SLIDE 18 ===
