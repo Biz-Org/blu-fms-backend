@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="fms_asset_management.AmAppShell">
+        <div class="o_am_layout">
+            <aside class="o_am_sidebar">
+                <div class="o_am_brand">
+                    <div class="o_am_brand_mark"><i class="fa fa-cubes"/></div>
+                    <div>
+                        <div class="o_am_brand_title">FMS Assets</div>
+                        <div class="o_am_brand_sub">Management Portal</div>
+                    </div>
+                </div>
+                <nav class="o_am_nav">
+                    <button t-foreach="nav" t-as="item" t-key="item.id"
+                        t-att-class="item.id === props.active ? 'active' : ''"
+                        t-on-click="() => this.open(item)">
+                        <i t-attf-class="fa {{ item.icon }}"/>
+                        <span t-esc="item.label"/>
+                    </button>
+                </nav>
+                <div class="o_am_nav_foot">
+                    <button t-if="!state.isAuditor" t-on-click="openConfiguration"><i class="fa fa-cog"/> Configuration</button>
+                    <div class="small text-muted px-2 pt-2" t-esc="state.roleLabel"/>
+                </div>
+            </aside>
+            <div class="o_am_main">
+                <header class="o_am_topbar">
+                    <div class="o_am_topbar_title" t-esc="pageTitle"/>
+                    <div class="o_am_topbar_search">
+                        <i class="fa fa-search"/>
+                        <input type="search" placeholder="Search assets (ID, name, serial)…"
+                            t-att-value="state.searchQuery"
+                            t-on-input="onSearchInput"
+                            t-on-keydown="onSearchKeydown"/>
+                    </div>
+                    <div class="o_am_topbar_actions">
+                        <span class="o_am_role_chip" t-esc="state.roleLabel"/>
+                        <img class="o_am_avatar" t-att-src="avatarUrl" t-att-alt="userName" title="Signed in user"/>
+                    </div>
+                </header>
+                <div class="o_am_content">
+                    <t t-slot="default"/>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

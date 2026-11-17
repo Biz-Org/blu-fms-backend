@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_fms_asset_label" model="ir.actions.report">
+        <field name="name">FMS Asset Label</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fms_asset_management.report_asset_label</field>
+        <field name="report_file">fms_asset_management.report_asset_label</field>
+        <field name="binding_model_id" ref="maintenance.model_maintenance_equipment"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_asset_label">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="asset">
+                <div class="page" style="padding:24px;font-family:Arial,sans-serif;">
+                    <h2 t-esc="asset.name"/>
+                    <p><strong>Asset ID:</strong> <span t-esc="asset.fms_asset_code"/></p>
+                    <p t-if="asset.fms_qr_token"><strong>QR Token:</strong> <span t-esc="asset.fms_qr_token"/></p>
+                    <p t-if="asset.fms_barcode"><strong>Barcode:</strong> <span t-esc="asset.fms_barcode"/></p>
+                    <p t-if="asset.fms_location_id"><strong>Location:</strong> <span t-esc="asset.fms_location_id.complete_name"/></p>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

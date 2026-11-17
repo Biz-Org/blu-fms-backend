@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="ir_cron_fms_asset_warranty_refresh" model="ir.cron">
+        <field name="name">FMS Asset: Refresh warranty/AMC status</field>
+        <field name="model_id" ref="fms_asset_management.model_fms_asset_warranty"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_refresh_fms_contract_status()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="ir_cron_fms_asset_depreciation_post" model="ir.cron">
+        <field name="name">FMS Asset: Post due depreciation lines</field>
+        <field name="model_id" ref="fms_asset_management.model_fms_asset_depreciation_schedule"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_post_due_depreciation_lines()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

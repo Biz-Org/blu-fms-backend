@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_fms_asset_classification_tree" model="ir.ui.view">
+        <field name="name">fms.asset.classification.tree</field>
+        <field name="model">fms.asset.classification</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="complete_name"/>
+                <field name="code"/>
+                <field name="level"/>
+                <field name="equipment_count"/>
+                <field name="active"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_fms_asset_classification_form" model="ir.ui.view">
+        <field name="name">fms.asset.classification.form</field>
+        <field name="model">fms.asset.classification</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(fms_asset_management.action_fms_asset_equipment)d" type="action" class="oe_stat_button" icon="fa-cubes" context="{'search_default_fms_classification_id': id}">
+                            <field name="equipment_count" widget="statinfo" string="Assets"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="level"/>
+                            <field name="parent_id" domain="[('company_id', '=', company_id)]"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="maintenance_category_id"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group string="Defaults">
+                        <group>
+                            <field name="default_criticality"/>
+                            <field name="default_useful_life_months"/>
+                            <field name="default_depreciation_method"/>
+                        </group>
+                        <group>
+                            <field name="default_inspection_frequency_days"/>
+                            <field name="requires_warranty"/>
+                            <field name="requires_amc"/>
+                        </group>
+                    </group>
+                    <field name="description"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_fms_asset_classification_search" model="ir.ui.view">
+        <field name="name">fms.asset.classification.search</field>
+        <field name="model">fms.asset.classification</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <filter string="Categories" name="filter_category" domain="[('level', '=', 'category')]"/>
+                <filter string="Types" name="filter_type" domain="[('level', '=', 'type')]"/>
+                <filter string="Sub-Types" name="filter_subtype" domain="[('level', '=', 'subtype')]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_fms_asset_classification" model="ir.actions.act_window">
+        <field name="name">Asset Classification</field>
+        <field name="res_model">fms.asset.classification</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+    </record>
+</odoo>
