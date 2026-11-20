@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Internal chain (cumulative):
+         Management (read only) < Agent < Team Lead < Facility Manager < Administrator
+         Resident is a portal group and is not part of that chain. -->
+    <record id="group_fms_helpdesk_viewer" model="res.groups">
+        <field name="name">Management (Read Only)</field>
+        <field name="category_id" ref="base.module_category_services_helpdesk"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Reviews tickets, reports, KPIs, SLA performance and resident satisfaction.</field>
+    </record>
+
+    <record id="group_fms_helpdesk_agent" model="res.groups">
+        <field name="name">Helpdesk Agent</field>
+        <field name="category_id" ref="base.module_category_services_helpdesk"/>
+        <field name="implied_ids" eval="[(4, ref('group_fms_helpdesk_viewer'))]"/>
+        <field name="comment">Creates, classifies and works tickets and records resolutions.</field>
+    </record>
+
+    <record id="group_fms_helpdesk_team_lead" model="res.groups">
+        <field name="name">Support Team Lead</field>
+        <field name="category_id" ref="base.module_category_services_helpdesk"/>
+        <field name="implied_ids" eval="[(4, ref('group_fms_helpdesk_agent'))]"/>
+        <field name="comment">Manages the queue, assigns and reassigns tickets, monitors SLA and coordinates escalations.</field>
+    </record>
+
+    <record id="group_fms_helpdesk_manager" model="res.groups">
+        <field name="name">Facility Manager</field>
+        <field name="category_id" ref="base.module_category_services_helpdesk"/>
+        <field name="implied_ids" eval="[(4, ref('group_fms_helpdesk_team_lead'))]"/>
+        <field name="comment">Monitors operational performance, escalations, SLA compliance and support teams.</field>
+    </record>
+
+    <record id="group_fms_helpdesk_admin" model="res.groups">
+        <field name="name">Helpdesk Administrator</field>
+        <field name="category_id" ref="base.module_category_services_helpdesk"/>
+        <field name="implied_ids" eval="[(4, ref('group_fms_helpdesk_manager'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        <field name="comment">Manages categories, routing rules, priorities, SLA policies and settings.</field>
+    </record>
+
+    <record id="group_fms_helpdesk_resident" model="res.groups">
+        <field name="name">Resident</field>
+        <field name="category_id" ref="base.module_category_services_helpdesk"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="comment">Creates and tracks own complaints, adds information and attachments, verifies resolution where configured, and submits feedback.</field>
+    </record>
+
+    <data noupdate="1">
+        <!-- Global company rules (always applied, AND-ed with group rules). -->
+        <record id="rule_fms_helpdesk_ticket_company" model="ir.rule">
+            <field name="name">Helpdesk Ticket: multi-company</field>
+            <field name="model_id" ref="model_fms_helpdesk_ticket"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_ticket_history_company" model="ir.rule">
+            <field name="name">Helpdesk Ticket History: multi-company</field>
+            <field name="model_id" ref="model_fms_helpdesk_ticket_history"/>
+            <field name="domain_force">[('ticket_id.company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_assignment_company" model="ir.rule">
+            <field name="name">Helpdesk Assignment: multi-company</field>
+            <field name="model_id" ref="model_fms_helpdesk_assignment"/>
+            <field name="domain_force">[('ticket_id.company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_escalation_company" model="ir.rule">
+            <field name="name">Helpdesk Escalation: multi-company</field>
+            <field name="model_id" ref="model_fms_helpdesk_escalation"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_resolution_company" model="ir.rule">
+            <field name="name">Helpdesk Resolution: multi-company</field>
+            <field name="model_id" ref="model_fms_helpdesk_resolution"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_feedback_company" model="ir.rule">
+            <field name="name">Helpdesk Feedback: multi-company</field>
+            <field name="model_id" ref="model_fms_helpdesk_feedback"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_team_company" model="ir.rule">
+            <field name="name">Helpdesk Team: multi-company</field>
+            <field name="model_id" ref="model_fms_helpdesk_team"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_category_company" model="ir.rule">
+            <field name="name">Helpdesk Category: multi-company</field>
+            <field name="model_id" ref="model_fms_helpdesk_category"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_sla_policy_company" model="ir.rule">
+            <field name="name">Helpdesk SLA Policy: multi-company</field>
+            <field name="model_id" ref="model_fms_helpdesk_sla_policy"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_routing_rule_company" model="ir.rule">
+            <field name="name">Helpdesk Routing Rule: multi-company</field>
+            <field name="model_id" ref="model_fms_helpdesk_routing_rule"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <!-- Resident: only own tickets and related rows. -->
+        <record id="rule_fms_helpdesk_ticket_resident" model="ir.rule">
+            <field name="name">Helpdesk Ticket: resident own tickets</field>
+            <field name="model_id" ref="model_fms_helpdesk_ticket"/>
+            <field name="groups" eval="[(4, ref('group_fms_helpdesk_resident'))]"/>
+            <field name="domain_force">['|', ('resident_id', '=', user.partner_id.id), ('reported_by_id', '=', user.id)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_ticket_history_resident" model="ir.rule">
+            <field name="name">Helpdesk History: resident own tickets</field>
+            <field name="model_id" ref="model_fms_helpdesk_ticket_history"/>
+            <field name="groups" eval="[(4, ref('group_fms_helpdesk_resident'))]"/>
+            <field name="domain_force">['|', ('ticket_id.resident_id', '=', user.partner_id.id), ('ticket_id.reported_by_id', '=', user.id)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_assignment_resident" model="ir.rule">
+            <field name="name">Helpdesk Assignment: resident own tickets</field>
+            <field name="model_id" ref="model_fms_helpdesk_assignment"/>
+            <field name="groups" eval="[(4, ref('group_fms_helpdesk_resident'))]"/>
+            <field name="domain_force">['|', ('ticket_id.resident_id', '=', user.partner_id.id), ('ticket_id.reported_by_id', '=', user.id)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_escalation_resident" model="ir.rule">
+            <field name="name">Helpdesk Escalation: resident own tickets</field>
+            <field name="model_id" ref="model_fms_helpdesk_escalation"/>
+            <field name="groups" eval="[(4, ref('group_fms_helpdesk_resident'))]"/>
+            <field name="domain_force">['|', ('ticket_id.resident_id', '=', user.partner_id.id), ('ticket_id.reported_by_id', '=', user.id)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_resolution_resident" model="ir.rule">
+            <field name="name">Helpdesk Resolution: resident own tickets</field>
+            <field name="model_id" ref="model_fms_helpdesk_resolution"/>
+            <field name="groups" eval="[(4, ref('group_fms_helpdesk_resident'))]"/>
+            <field name="domain_force">['|', ('ticket_id.resident_id', '=', user.partner_id.id), ('ticket_id.reported_by_id', '=', user.id)]</field>
+        </record>
+        <record id="rule_fms_helpdesk_feedback_resident" model="ir.rule">
+            <field name="name">Helpdesk Feedback: resident own tickets</field>
+            <field name="model_id" ref="model_fms_helpdesk_feedback"/>
+            <field name="groups" eval="[(4, ref('group_fms_helpdesk_resident'))]"/>
+            <field name="domain_force">['|', ('ticket_id.resident_id', '=', user.partner_id.id), ('resident_id', '=', user.partner_id.id)]</field>
+        </record>
+    </data>
+
+</odoo>

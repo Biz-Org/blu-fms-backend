@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="fms_asset_management.Register">
+        <div class="o_action o_am_app">
+            <AmAppShell active="'register'" title="'Asset Register'">
+                <div class="o_am_shell">
+                    <div class="o_am_page_header">
+                        <div>
+                            <h1>Asset Register</h1>
+                            <p>Search, filter, and open assets backed by maintenance equipment records.</p>
+                        </div>
+                        <div class="o_am_header_actions">
+                            <button t-if="state.canCreate" class="o_am_btn primary" t-on-click="openRegistration">
+                                <i class="fa fa-plus"/> Register Asset
+                            </button>
+                            <button class="o_am_btn secondary" t-on-click="reload"><i class="fa fa-refresh"/> Refresh</button>
+                        </div>
+                    </div>
+
+                    <div class="o_am_filters o_am_card">
+                        <div class="o_am_filter_field o_am_filter_search">
+                            <label>Search</label>
+                            <input type="search" placeholder="Asset ID, name, serial…" t-att-value="state.search" t-on-input="onSearchInput"/>
+                        </div>
+                        <div class="o_am_filter_field">
+                            <label>Lifecycle</label>
+                            <select t-att-value="state.lifecycle" t-on-change="onLifecycleChange">
+                                <option value="">All lifecycle states</option>
+                                <option value="draft">Draft</option>
+                                <option value="active">Active</option>
+                                <option value="under_maintenance">Under Maintenance</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="disposed">Disposed</option>
+                            </select>
+                        </div>
+                        <div class="o_am_filter_field">
+                            <label>Classification</label>
+                            <select t-att-value="state.classFilter" t-on-change="onClassChange">
+                                <option value="">All classifications</option>
+                                <option t-foreach="state.classOptions" t-as="opt" t-key="opt.id" t-att-value="opt.id" t-esc="opt.complete_name"/>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div t-if="state.loading" class="o_am_empty">
+                        <h3>Loading assets</h3>
+                    </div>
+                    <div t-elif="state.error" class="o_am_empty o_am_empty_error">
+                        <h3>Asset register unavailable</h3>
+                        <p t-esc="state.error"/>
+                        <button class="o_am_btn primary mt-2" t-on-click="reload">Retry</button>
+                    </div>
+                    <t t-else="">
+                        <div class="o_am_table_wrap o_am_card" t-if="state.rows.length">
+                            <table class="o_am_table o_am_table_clickable o_am_table_zebra">
+                                <thead>
+                                    <tr>
+                                        <th>Asset ID</th>
+                                        <th>Name</th>
+                                        <th>Lifecycle</th>
+                                        <th>Health</th>
+                                        <th>Classification</th>
+                                        <th>Location</th>
+                                        <th class="text-end">Book Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="state.rows" t-as="row" t-key="row.id" t-on-click="() => this.openDetail(row.id)">
+                                        <td><span class="o_am_code" t-esc="row.fms_asset_code or '—'"/></td>
+                                        <td t-esc="row.name"/>
+                                        <td><AmStatusBadge state="row.fms_lifecycle_state"/></td>
+                                        <td><AmStatusBadge state="row.fms_health_status"/></td>
+                                        <td t-esc="displayRelation(row.fms_classification_id)"/>
+                                        <td t-esc="displayRelation(row.fms_location_id)"/>
+                                        <td class="text-end" t-esc="row.fms_book_value or '—'"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="o_am_pager">
+                                <span t-esc="pageLabel"/>
+                                <div class="d-flex gap-2">
+                                    <button class="o_am_btn secondary" t-att-disabled="state.offset === 0" t-on-click="prevPage">Previous</button>
+                                    <button class="o_am_btn secondary" t-att-disabled="state.offset + 20 >= state.total" t-on-click="nextPage">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                        <AmEmptyState t-else="" icon="'fa-search'" title="'No assets found'" hint="'Adjust filters or register a new asset.'"/>
+                    </t>
+                </div>
+            </AmAppShell>
+        </div>
+    </t>
+</templates>

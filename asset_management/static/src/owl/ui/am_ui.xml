@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="fms_asset_management.AmKpiCard">
+        <div t-attf-class="o_am_kpi_card {{ props.tone ? 'tone-' + props.tone : '' }} {{ props.onClick ? 'is-clickable' : '' }}" t-on-click="onClick">
+            <div t-if="props.icon" class="o_am_kpi_card_icon"><i t-attf-class="fa {{ props.icon }}"/></div>
+            <div class="o_am_kpi_card_label" t-esc="props.label"/>
+            <div class="o_am_kpi_card_value" t-esc="props.value"/>
+            <div t-if="props.hint" class="o_am_kpi_card_hint" t-esc="props.hint"/>
+        </div>
+    </t>
+    <t t-name="fms_asset_management.AmStatusBadge">
+        <span t-attf-class="o_am_badge {{ tone }}" t-esc="text"/>
+    </t>
+    <t t-name="fms_asset_management.AmEmptyState">
+        <div class="o_am_empty_state">
+            <i t-if="props.icon" t-attf-class="fa {{ props.icon }} o_am_empty_icon"/>
+            <h3 t-esc="props.title"/>
+            <p t-if="props.hint" t-esc="props.hint"/>
+        </div>
+    </t>
+    <t t-name="fms_asset_management.AmAlertBanner">
+        <div t-attf-class="o_am_alert o_am_alert-{{ props.tone or 'info' }}">
+            <i class="fa fa-info-circle"/>
+            <div class="flex-grow-1">
+                <strong t-esc="props.title"/>
+                <div class="small" t-esc="props.message"/>
+            </div>
+            <button t-if="props.actionLabel" class="o_am_btn secondary" t-on-click="onAction" t-esc="props.actionLabel"/>
+        </div>
+    </t>
+</templates>

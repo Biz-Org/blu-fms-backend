@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="fms_asset_management.Registration">
+        <div class="o_action o_am_app">
+            <AmAppShell active="'registration'" title="'Register Asset'">
+                <div class="o_am_shell">
+                    <div class="o_am_page_header">
+                        <div>
+                            <h1>Register Asset</h1>
+                            <p>Structured registration aligned with FMS lifecycle master data.</p>
+                        </div>
+                        <div class="o_am_header_actions">
+                            <button class="o_am_btn secondary" t-on-click="openRegister">Back to register</button>
+                        </div>
+                    </div>
+
+                    <div class="o_am_steps">
+                        <t t-foreach="['basic','location','purchase','financial','documents','review']" t-as="step" t-key="step">
+                            <span t-att-class="step === stepKey ? 'active' : ''" t-esc="step"/>
+                        </t>
+                    </div>
+                    <p class="text-muted small mb-3">Step: <t t-esc="stepLabel"/></p>
+
+                    <div class="o_am_card o_am_form">
+                        <t t-if="stepKey === 'basic'">
+                            <label>Asset Name *</label>
+                            <input type="text" t-model="state.form.name" placeholder="e.g. Chiller Unit A"/>
+                            <label>Classification (Sub-Type)</label>
+                            <select t-model="state.form.fms_classification_id">
+                                <option value="">—</option>
+                                <option t-foreach="state.classifications" t-as="row" t-key="row.id" t-att-value="row.id" t-esc="row.complete_name"/>
+                            </select>
+                            <label>Manufacturer</label>
+                            <input type="text" t-model="state.form.fms_manufacturer"/>
+                            <label>Model</label>
+                            <input type="text" t-model="state.form.model"/>
+                            <label>Serial Number</label>
+                            <input type="text" t-model="state.form.serial_no" placeholder="Leave blank to use generated Asset ID"/>
+                            <label>Description</label>
+                            <textarea rows="3" t-model="state.form.note"/>
+                        </t>
+                        <t t-elif="stepKey === 'location'">
+                            <label>Room / Location</label>
+                            <select t-model="state.form.fms_location_id">
+                                <option value="">—</option>
+                                <option t-foreach="state.locations" t-as="loc" t-key="loc.id" t-att-value="loc.id" t-esc="loc.complete_name"/>
+                            </select>
+                        </t>
+                        <t t-elif="stepKey === 'purchase'">
+                            <label>Acquisition Date</label>
+                            <input type="date" t-model="state.form.fms_acquisition_date"/>
+                            <label>Purchase Order Reference</label>
+                            <input type="text" t-model="state.form.fms_purchase_order_ref"/>
+                            <label>Invoice Reference</label>
+                            <input type="text" t-model="state.form.fms_invoice_ref"/>
+                        </t>
+                        <t t-elif="stepKey === 'financial'">
+                            <label>Acquisition Cost</label>
+                            <input type="number" step="0.01" t-model="state.form.cost"/>
+                            <label>Residual Value</label>
+                            <input type="number" step="0.01" t-model="state.form.fms_residual_value"/>
+                            <label>Useful Life (months)</label>
+                            <input type="number" t-model="state.form.fms_useful_life_months"/>
+                            <label>Depreciation Method (stored)</label>
+                            <select t-model="state.form.fms_depreciation_method">
+                                <option value="">—</option>
+                                <option value="straight_line">Straight Line</option>
+                                <option value="declining">Declining Balance</option>
+                                <option value="units">Units of Production</option>
+                                <option value="manual">Manual / External</option>
+                            </select>
+                            <label>Condition</label>
+                            <select t-model="state.form.fms_condition">
+                                <option value="excellent">Excellent</option>
+                                <option value="good">Good</option>
+                                <option value="fair">Fair</option>
+                                <option value="poor">Poor</option>
+                                <option value="critical">Critical</option>
+                            </select>
+                        </t>
+                        <t t-elif="stepKey === 'documents'">
+                            <p class="text-muted">Attach documents from the Asset Details screen after creation (Odoo attachments).</p>
+                            <label>Document Note</label>
+                            <input type="text" t-model="state.form.attachment_description" placeholder="e.g. Warranty certificate pending upload"/>
+                        </t>
+                        <t t-else="">
+                            <h4>Review</h4>
+                            <ul class="o_am_review_list">
+                                <li>Name: <t t-esc="state.form.name"/></li>
+                                <li>Activate on create: <t t-esc="state.form.fms_confirm_active ? 'Yes' : 'No'"/></li>
+                                <li>Classification ID: <t t-esc="state.form.fms_classification_id or '—'"/></li>
+                                <li>Location ID: <t t-esc="state.form.fms_location_id or '—'"/></li>
+                            </ul>
+                            <label class="d-flex align-items-center gap-2 mt-2">
+                                <input type="checkbox" t-model="state.form.fms_confirm_active"/>
+                                Set lifecycle status to Active when created
+                            </label>
+                        </t>
+                    </div>
+
+                    <div class="o_am_form_actions">
+                        <button class="o_am_btn" t-if="state.stepIndex > 0" t-on-click="prevStep">Previous</button>
+                        <button class="o_am_btn primary" t-if="state.stepIndex &lt; 5" t-on-click="nextStep">Continue</button>
+                        <button class="o_am_btn primary" t-else="" t-att-disabled="state.saving" t-on-click="submitRegistration">
+                            <t t-if="state.saving">Creating...</t>
+                            <t t-else="">Create Asset</t>
+                        </button>
+                    </div>
+                </div>
+            </AmAppShell>
+        </div>
+    </t>
+</templates>

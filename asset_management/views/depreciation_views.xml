@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_fms_asset_depreciation_schedule_list" model="ir.ui.view">
+        <field name="name">fms.asset.depreciation.schedule.list</field>
+        <field name="model">fms.asset.depreciation.schedule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="equipment_id"/>
+                <field name="method"/>
+                <field name="state"/>
+                <field name="start_date"/>
+                <field name="book_value"/>
+                <field name="accumulated_depreciation"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_fms_asset_depreciation_schedule_form" model="ir.ui.view">
+        <field name="name">fms.asset.depreciation.schedule.form</field>
+        <field name="model">fms.asset.depreciation.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Depreciation Schedule">
+                <header>
+                    <button name="action_generate_lines" type="object" string="Generate Lines" class="btn-primary"
+                        invisible="state not in ('draft', 'running')"/>
+                    <button name="action_post_due_lines" type="object" string="Post Due Lines"
+                        invisible="state != 'running'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state in ('completed', 'cancelled')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,running,completed,cancelled"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="equipment_id"/>
+                            <field name="method"/>
+                            <field name="start_date"/>
+                            <field name="useful_life_months"/>
+                            <field name="declining_factor" invisible="method != 'declining'"/>
+                        </group>
+                        <group>
+                            <field name="acquisition_cost"/>
+                            <field name="residual_value"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="accumulated_depreciation" readonly="1"/>
+                            <field name="book_value" readonly="1"/>
+                            <field name="pending_amount" readonly="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Periods">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="period_number"/>
+                                    <field name="period_date"/>
+                                    <field name="depreciation_amount"/>
+                                    <field name="state"/>
+                                    <field name="posted_date"/>
+                                    <field name="journal_entry_ref"/>
+                                    <button name="action_post" type="object" string="Post" invisible="state != 'pending'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_fms_asset_depreciation_schedule" model="ir.actions.act_window">
+        <field name="name">Depreciation Schedules</field>
+        <field name="res_model">fms.asset.depreciation.schedule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_fms_asset_accounting_config_form" model="ir.ui.view">
+        <field name="name">fms.asset.accounting.config.form</field>
+        <field name="model">fms.asset.accounting.config</field>
+        <field name="arch" type="xml">
+            <form string="Accounting Bridge">
+                <sheet>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="auto_post_journal"/>
+                        <field name="journal_code"/>
+                        <field name="depreciation_expense_account_code"/>
+                        <field name="accumulated_depreciation_account_code"/>
+                        <field name="notes"/>
+                    </group>
+                    <p class="text-muted">
+                        Requires the Accounting app. Account codes must exist on the company chart of accounts.
+                    </p>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_fms_asset_accounting_config_list" model="ir.ui.view">
+        <field name="name">fms.asset.accounting.config.list</field>
+        <field name="model">fms.asset.accounting.config</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="auto_post_journal"/>
+                <field name="journal_code"/>
+                <field name="depreciation_expense_account_code"/>
+                <field name="accumulated_depreciation_account_code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_fms_asset_accounting_config" model="ir.actions.act_window">
+        <field name="name">Accounting Bridge</field>
+        <field name="res_model">fms.asset.accounting.config</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

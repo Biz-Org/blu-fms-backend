@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_am_dashboard_ui" model="ir.actions.client">
+        <field name="name">Asset Dashboard</field>
+        <field name="tag">fms_asset_management.action_dashboard</field>
+        <field name="path">am-dashboard</field>
+    </record>
+    <record id="action_am_register_ui" model="ir.actions.client">
+        <field name="name">Asset Register</field>
+        <field name="tag">fms_asset_management.action_register</field>
+        <field name="path">am-register</field>
+    </record>
+    <record id="action_am_registration_ui" model="ir.actions.client">
+        <field name="name">Register Asset</field>
+        <field name="tag">fms_asset_management.action_registration</field>
+        <field name="path">am-registration</field>
+    </record>
+    <record id="action_am_detail_ui" model="ir.actions.client">
+        <field name="name">Asset Details</field>
+        <field name="tag">fms_asset_management.action_detail</field>
+        <field name="path">am-detail</field>
+    </record>
+    <record id="action_am_operations_ui" model="ir.actions.client">
+        <field name="name">Asset Operations</field>
+        <field name="tag">fms_asset_management.action_operations</field>
+        <field name="path">am-operations</field>
+    </record>
+    <record id="action_am_qr_ui" model="ir.actions.client">
+        <field name="name">QR / Barcode</field>
+        <field name="tag">fms_asset_management.action_qr</field>
+        <field name="path">am-qr</field>
+    </record>
+
+    <menuitem
+        id="menu_fms_asset_root"
+        name="Asset Management"
+        sequence="52"
+        action="action_am_dashboard_ui"
+        groups="fms_asset_management.group_asset_administrator,fms_asset_management.group_asset_manager,fms_asset_management.group_asset_facility_manager,fms_asset_management.group_asset_technician,fms_asset_management.group_asset_finance,fms_asset_management.group_asset_auditor,base.group_system"
+    />
+    <menuitem id="menu_am_dashboard" name="Dashboard" parent="menu_fms_asset_root" action="action_am_dashboard_ui" sequence="1"/>
+    <menuitem id="menu_am_register" name="Asset Register" parent="menu_fms_asset_root" action="action_am_register_ui" sequence="5"/>
+    <menuitem id="menu_am_registration" name="Register Asset" parent="menu_fms_asset_root" action="action_am_registration_ui" sequence="6"
+        groups="fms_asset_management.group_asset_administrator,fms_asset_management.group_asset_manager,base.group_system"/>
+    <menuitem id="menu_am_operations" name="Operations" parent="menu_fms_asset_root" action="action_am_operations_ui" sequence="15"/>
+    <menuitem id="menu_am_qr" name="QR / Barcode" parent="menu_fms_asset_root" action="action_am_qr_ui" sequence="16"/>
+    <menuitem id="menu_am_transfers" name="Transfers" parent="menu_am_configuration" action="action_fms_asset_transfer" sequence="40"/>
+    <menuitem id="menu_am_disposals" name="Disposals" parent="menu_am_configuration" action="action_fms_asset_disposal" sequence="50"/>
+    <menuitem id="menu_am_configuration" name="Configuration" parent="menu_fms_asset_root" sequence="90"
+        groups="fms_asset_management.group_asset_administrator,fms_asset_management.group_asset_manager,base.group_system"/>
+    <menuitem id="menu_am_classification" name="Classification" parent="menu_am_configuration" action="action_fms_asset_classification" sequence="10"/>
+    <menuitem id="menu_am_locations" name="Locations" parent="menu_am_configuration" action="action_fms_asset_location" sequence="20"/>
+    <menuitem id="menu_am_depreciation" name="Depreciation Schedules" parent="menu_am_configuration" action="action_fms_asset_depreciation_schedule" sequence="35"
+        groups="fms_asset_management.group_asset_administrator,fms_asset_management.group_asset_manager,fms_asset_management.group_asset_finance,base.group_system"/>
+    <menuitem id="menu_am_accounting_bridge" name="Accounting Bridge" parent="menu_am_configuration" action="action_fms_asset_accounting_config" sequence="36"
+        groups="fms_asset_management.group_asset_administrator,fms_asset_management.group_asset_finance,base.group_system"/>
+    <menuitem id="menu_am_equipment_backend" name="Assets (Backend)" parent="menu_am_configuration" action="action_fms_asset_equipment" sequence="30"
+        groups="fms_asset_management.group_asset_administrator,fms_asset_management.group_asset_manager,base.group_system"/>
+</odoo>

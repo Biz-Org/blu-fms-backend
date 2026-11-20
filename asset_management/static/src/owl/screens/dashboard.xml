@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="fms_asset_management.Dashboard">
+        <div class="o_action o_am_app">
+            <AmAppShell active="'dashboard'" title="'Asset Overview'">
+                <div class="o_am_shell">
+                    <div class="o_am_page_header">
+                        <div>
+                            <h1>Asset Overview</h1>
+                            <p>Operational dashboard aligned with the FMS asset register and live equipment records.</p>
+                        </div>
+                        <div class="o_am_header_actions">
+                            <button t-if="state.canRegister" class="o_am_btn primary" t-on-click="openRegistration">
+                                <i class="fa fa-plus"/> Register Asset
+                            </button>
+                            <button class="o_am_btn secondary" t-on-click="openRegister">
+                                <i class="fa fa-list"/> Asset Register
+                            </button>
+                            <button class="o_am_btn secondary" t-on-click="openQr">
+                                <i class="fa fa-qrcode"/> Scan QR
+                            </button>
+                        </div>
+                    </div>
+
+                    <div t-if="state.loading" class="o_am_empty">
+                        <h3>Loading dashboard</h3>
+                        <p>Fetching asset records.</p>
+                    </div>
+                    <div t-elif="state.error" class="o_am_empty o_am_empty_error">
+                        <h3>Dashboard could not load</h3>
+                        <p t-esc="state.error"/>
+                        <button class="o_am_btn primary mt-2" t-on-click="reload">Retry</button>
+                    </div>
+                    <div t-elif="!data.available" class="o_am_empty">
+                        <AmEmptyState icon="'fa-lock'" title="'Dashboard unavailable'" hint="dashboardUnavailableReason"/>
+                    </div>
+                    <t t-else="">
+                        <AmAlertBanner t-if="attentionCount"
+                            tone="'warning'"
+                            title="'Items need your attention'"
+                            message="attentionMessage"
+                            actionLabel="'Open Operations'"
+                            onAction.bind="openOperations"/>
+
+                        <div class="o_am_kpi_grid">
+                            <AmKpiCard label="'Total Assets'" value="data.total_assets || 0" icon="'fa-cubes'" onClick.bind="openRegister"/>
+                            <AmKpiCard label="'Active'" value="data.active_assets || 0" icon="'fa-check-circle'" onClick.bind="openRegister"/>
+                            <AmKpiCard label="'Under Maintenance'" value="data.under_maintenance || 0" icon="'fa-wrench'" tone="kpiTone(data.under_maintenance)"/>
+                            <AmKpiCard label="'Disposed'" value="data.disposed_assets || 0" icon="'fa-archive'"/>
+                            <AmKpiCard label="'Needs Attention'" value="data.assets_requiring_attention || 0" icon="'fa-exclamation-circle'" tone="kpiToneDanger(data.assets_requiring_attention)"/>
+                            <AmKpiCard label="'Depreciation Due'" value="data.depreciation_due_count || 0" icon="'fa-line-chart'" tone="kpiTone(data.depreciation_due_count)"/>
+                            <AmKpiCard label="'Pending Transfers'" value="data.pending_transfers || 0" icon="'fa-random'" tone="kpiTone(data.pending_transfers)" onClick.bind="openOperations"/>
+                            <AmKpiCard label="'Warranty Expiring'" value="data.warranty_expiring || 0" icon="'fa-shield'" tone="kpiTone(data.warranty_expiring)"/>
+                        </div>
+
+                        <div class="o_am_dash_grid">
+                            <div class="o_am_card">
+                                <div class="o_am_card_head">Assets by lifecycle</div>
+                                <t t-if="lifecycleRows.length">
+                                    <div class="o_am_stat_line" t-foreach="lifecycleRows" t-as="row" t-key="row.state">
+                                        <AmStatusBadge state="row.state"/>
+                                        <span class="o_am_stat_count" t-esc="row.count"/>
+                                    </div>
+                                </t>
+                                <AmEmptyState t-else="" icon="'fa-inbox'" title="'No assets yet'" hint="'Register your first asset to populate lifecycle counts.'"/>
+                            </div>
+                            <div class="o_am_card">
+                                <div class="o_am_card_head">Recently updated</div>
+                                <t t-if="(data.recent_assets || []).length">
+                                    <div class="o_am_list_row" t-foreach="data.recent_assets" t-as="row" t-key="row.id"
+                                        t-on-click="() => this.openDetail(row.id)">
+                                        <div>
+                                            <div class="o_am_list_title" t-esc="row.name"/>
+                                            <div class="o_am_list_meta">
+                                                <span t-esc="row.fms_asset_code or '—'"/>
+                                            </div>
+                                        </div>
+                                        <AmStatusBadge state="row.fms_lifecycle_state"/>
+                                    </div>
+                                </t>
+                                <AmEmptyState t-else="" icon="'fa-clock-o'" title="'No recent activity'" hint="'Asset updates will appear here.'"/>
+                            </div>
+                        </div>
+
+                        <div class="o_am_card o_am_finance_summary">
+                            <div class="o_am_card_head">Finance snapshot</div>
+                            <div class="o_am_finance_metrics">
+                                <p>Total book value (eligible assets): <strong t-esc="formatMoney(data.total_book_value)"/></p>
+                                <p class="text-muted small mb-0">Assets without depreciation schedule: <strong t-esc="data.assets_without_depreciation_schedule || 0"/></p>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </AmAppShell>
+        </div>
+    </t>
+</templates>

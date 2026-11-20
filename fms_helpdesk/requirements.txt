@@ -1,0 +1,4 @@
+# Python packages needed by FMS Helpdesk on top of Odoo 18.
+# The module currently uses only Odoo core + stdlib (no extra pip deps).
+# Add packages here when the module gains optional integrations
+# (e.g. Excel export, external API clients).

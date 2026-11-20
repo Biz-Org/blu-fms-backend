@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="fms_asset_management.Operations">
+        <div class="o_action o_am_app">
+            <AmAppShell active="'operations'" title="'Operations'">
+                <div class="o_am_shell">
+                    <div class="o_am_page_header">
+                        <div>
+                            <h1>Asset Operations</h1>
+                            <p>Pending transfers and disposal approvals.</p>
+                        </div>
+                    </div>
+                    <div t-if="state.loading" class="o_am_empty"><h3>Loading...</h3></div>
+                    <t t-else="">
+                        <div class="o_am_card">
+                            <h4>Transfers</h4>
+                            <table class="o_am_table" t-if="state.transfers.length">
+                                <thead><tr><th>Reference</th><th>Asset</th><th>State</th><th>Date</th><th t-if="state.canApprove">Actions</th></tr></thead>
+                                <tbody>
+                                    <tr t-foreach="state.transfers" t-as="row" t-key="row.id">
+                                        <td t-esc="row.name"/>
+                                        <td t-esc="displayRelation(row.equipment_id)"/>
+                                        <td t-esc="row.state"/>
+                                        <td t-esc="row.scheduled_transfer_date or ''"/>
+                                        <td t-if="state.canApprove">
+                                            <button t-if="row.state === 'submitted'" class="o_am_btn primary" t-on-click="() => this.workflow(row.id, 'fms.asset.transfer', 'action_approve')">Approve</button>
+                                            <button t-if="row.state === 'approved'" class="o_am_btn" t-on-click="() => this.workflow(row.id, 'fms.asset.transfer', 'action_complete')">Complete</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p t-else="" class="text-muted">No pending transfers.</p>
+                        </div>
+                        <div class="o_am_card">
+                            <h4>Disposals</h4>
+                            <table class="o_am_table" t-if="state.disposals.length">
+                                <thead><tr><th>Reference</th><th>Asset</th><th>State</th><th>Date</th><th t-if="state.canApprove">Actions</th></tr></thead>
+                                <tbody>
+                                    <tr t-foreach="state.disposals" t-as="row" t-key="row.id">
+                                        <td t-esc="row.name"/>
+                                        <td t-esc="displayRelation(row.equipment_id)"/>
+                                        <td t-esc="row.state"/>
+                                        <td t-esc="row.disposal_date or ''"/>
+                                        <td t-if="state.canApprove">
+                                            <button t-if="row.state === 'submitted'" class="o_am_btn primary" t-on-click="() => this.workflow(row.id, 'fms.asset.disposal', 'action_approve')">Approve</button>
+                                            <button t-if="row.state === 'approved'" class="o_am_btn danger" t-on-click="() => this.workflow(row.id, 'fms.asset.disposal', 'action_dispose')">Dispose</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p t-else="" class="text-muted">No pending disposals.</p>
+                        </div>
+                    </t>
+                </div>
+            </AmAppShell>
+        </div>
+    </t>
+</templates>

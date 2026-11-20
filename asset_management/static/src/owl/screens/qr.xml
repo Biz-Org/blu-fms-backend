@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="fms_asset_management.Qr">
+        <div class="o_action o_am_app">
+            <AmAppShell active="'qr'" title="'QR / Barcode'">
+                <div class="o_am_shell">
+                    <div class="o_am_page_header">
+                        <div>
+                            <h1>QR / Barcode</h1>
+                            <p>Scan or enter a token to open the asset record.</p>
+                        </div>
+                    </div>
+                    <div class="o_am_card o_am_form">
+                        <label>Token / Barcode</label>
+                        <input type="text" t-model="state.scanToken" placeholder="Paste QR token or barcode"/>
+                        <button class="o_am_btn primary mt-2" t-on-click="scanAsset">Open Asset</button>
+                        <p t-if="state.scanError" class="text-danger mt-2" t-esc="state.scanError"/>
+                    </div>
+                    <div t-if="state.loading" class="o_am_empty"><h3>Loading tags...</h3></div>
+                    <div t-else="" class="o_am_table_wrap o_am_card">
+                        <table class="o_am_table o_am_table_clickable">
+                            <thead><tr><th>Asset ID</th><th>Name</th><th>QR Token</th><th>Barcode</th></tr></thead>
+                            <tbody>
+                                <tr t-foreach="state.rows" t-as="row" t-key="row.id" t-on-click="() => this.openDetail(row.id)">
+                                    <td t-esc="row.fms_asset_code"/>
+                                    <td t-esc="row.name"/>
+                                    <td t-esc="row.fms_qr_token or '—'"/>
+                                    <td t-esc="row.fms_barcode or '—'"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </AmAppShell>
+        </div>
+    </t>
+</templates>

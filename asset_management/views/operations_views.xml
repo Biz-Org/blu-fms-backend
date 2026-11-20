@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_fms_asset_transfer_list" model="ir.ui.view">
+        <field name="name">fms.asset.transfer.list</field>
+        <field name="model">fms.asset.transfer</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="equipment_id"/>
+                <field name="state"/>
+                <field name="scheduled_transfer_date"/>
+                <field name="to_location_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_fms_asset_transfer_form" model="ir.ui.view">
+        <field name="name">fms.asset.transfer.form</field>
+        <field name="model">fms.asset.transfer</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" type="object" string="Submit" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve" invisible="state != 'submitted'" groups="fms_asset_management.group_asset_administrator,fms_asset_management.group_asset_manager"/>
+                    <button name="action_reject" type="object" string="Reject" invisible="state not in ('submitted','approved')" groups="fms_asset_management.group_asset_administrator,fms_asset_management.group_asset_manager"/>
+                    <button name="action_complete" type="object" string="Complete" invisible="state != 'approved'" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,completed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="equipment_id" readonly="state != 'draft'"/>
+                        <field name="transfer_type" readonly="state != 'draft'"/>
+                        <field name="from_location_id" readonly="1"/>
+                        <field name="to_location_id" readonly="state != 'draft'"/>
+                        <field name="from_custodian_id" readonly="1"/>
+                        <field name="to_custodian_id" readonly="state != 'draft'"/>
+                        <field name="scheduled_transfer_date" readonly="state != 'draft'"/>
+                        <field name="reason" readonly="state != 'draft'"/>
+                        <field name="notes" readonly="state != 'draft'"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_fms_asset_transfer" model="ir.actions.act_window">
+        <field name="name">Asset Transfers</field>
+        <field name="res_model">fms.asset.transfer</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_fms_asset_disposal_list" model="ir.ui.view">
+        <field name="name">fms.asset.disposal.list</field>
+        <field name="model">fms.asset.disposal</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="equipment_id"/>
+                <field name="state"/>
+                <field name="disposal_date"/>
+                <field name="disposal_reason"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_fms_asset_disposal_form" model="ir.ui.view">
+        <field name="name">fms.asset.disposal.form</field>
+        <field name="model">fms.asset.disposal</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" type="object" string="Submit" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve" invisible="state != 'submitted'" groups="fms_asset_management.group_asset_administrator,fms_asset_management.group_asset_manager"/>
+                    <button name="action_reject" type="object" string="Reject" invisible="state not in ('submitted','approved')" groups="fms_asset_management.group_asset_administrator,fms_asset_management.group_asset_manager"/>
+                    <button name="action_dispose" type="object" string="Mark Disposed" invisible="state != 'approved'" class="oe_highlight" groups="fms_asset_management.group_asset_administrator,fms_asset_management.group_asset_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,disposed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="equipment_id" readonly="state != 'draft'"/>
+                        <field name="disposal_date" readonly="state != 'draft'"/>
+                        <field name="disposal_reason" readonly="state != 'draft'"/>
+                        <field name="disposal_method" readonly="state != 'draft'"/>
+                        <field name="book_value" readonly="state != 'draft'"/>
+                        <field name="remarks" readonly="state != 'draft'"/>
+                        <field name="approved_by_id" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_fms_asset_disposal" model="ir.actions.act_window">
+        <field name="name">Asset Disposals</field>
+        <field name="res_model">fms.asset.disposal</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

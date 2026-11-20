@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_fms_asset_location_tree" model="ir.ui.view">
+        <field name="name">fms.asset.location.tree</field>
+        <field name="model">fms.asset.location</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="complete_name"/>
+                <field name="code"/>
+                <field name="location_type"/>
+                <field name="equipment_count"/>
+                <field name="active"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_fms_asset_location_form" model="ir.ui.view">
+        <field name="name">fms.asset.location.form</field>
+        <field name="model">fms.asset.location</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(fms_asset_management.action_fms_asset_equipment)d" type="action" class="oe_stat_button" icon="fa-map-marker" context="{'search_default_fms_location_id': id}">
+                            <field name="equipment_count" widget="statinfo" string="Assets"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="location_type"/>
+                            <field name="parent_id" domain="[('company_id', '=', company_id)]"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="fms_core_location_ref"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <field name="description"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_fms_asset_location_search" model="ir.ui.view">
+        <field name="name">fms.asset.location.search</field>
+        <field name="model">fms.asset.location</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="location_type"/>
+                <filter string="Properties" name="filter_property" domain="[('location_type', '=', 'property')]"/>
+                <filter string="Rooms" name="filter_room" domain="[('location_type', '=', 'room')]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_fms_asset_location" model="ir.actions.act_window">
+        <field name="name">Asset Locations</field>
+        <field name="res_model">fms.asset.location</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
