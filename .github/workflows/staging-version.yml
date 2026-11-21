@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - 'staging'
+  push:
+    branches:
+      - 'staging'
   workflow_dispatch:
 
 permissions:
@@ -20,12 +23,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: false
+          fetch-depth: 0
 
       - name: Get repo name
         run: echo "REPO=$(echo ${{ github.repository }} | awk -F/ '{print $2}')" >> $GITHUB_ENV
 
       - name: Git LFS Pull
-        run: git lfs pull
+        continue-on-error: true
+        run: |
+          if command -v git-lfs >/dev/null 2>&1; then
+            git lfs pull
+          fi
 
       - name: Docker meta
         id: meta
@@ -61,17 +71,23 @@ jobs:
     name: Bump Version & Tag Release
     needs: dockerBuild
     runs-on: ubuntu-22.04
+    if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          submodules: false
+
+      - name: Prepare git refs for tag action
+        run: |
+          git fetch origin staging --tags
+          if ! git show-ref --verify --quiet refs/heads/staging; then
+            git branch staging origin/staging
+          fi
 
       - name: Bump version and push tag
-        if: >
-          github.event_name == 'push' && github.ref == 'refs/heads/staging' ||
-          github.event_name == 'pull_request' && github.base_ref == 'staging'
-
         id: tag
         uses: anothrNick/github-tag-action@1.67.0
         env:
@@ -79,8 +95,12 @@ jobs:
           WITH_V: true
           DEFAULT_BUMP: patch
           PRERELEASE: false
+          DEFAULT_BRANCH: staging
+          RELEASE_BRANCHES: staging
+          BRANCH_HISTORY: compare
 
       - name: Build & push Docker image using new tag
+        if: steps.tag.outputs.tag != ''
         run: |
           IMAGE_TAG=${{ steps.tag.outputs.tag }}
           IMAGE_NAME=bizlem123/blu-fms-backend
@@ -101,13 +121,9 @@ jobs:
         working-directory: blu-devops-updated/
         run: |
           IMAGE_TAG=${{ steps.tag.outputs.tag }}
-          BRANCH="${{ github.event.pull_request.base.ref }}"
-
-          if [[ "$BRANCH" == "staging" ]]; then
-            WORKING_DIR="environment/e2e/staging/app/blu-fms-backend"
-            cd $WORKING_DIR
-            sed -i "s#^\( *tag: *\).*#\1\"$IMAGE_TAG\"#" dev.yaml
-          fi
+          WORKING_DIR="environment/e2e/staging/app/blu-fms-backend"
+          cd "$WORKING_DIR"
+          sed -i "s#^\( *tag: *\).*#\1\"$IMAGE_TAG\"#" dev.yaml
 
       - name: Check for Changes
         id: check_changes
@@ -127,28 +143,31 @@ jobs:
           git push origin main
 
       - name: Create GitHub Release
-        if: steps.tag.outputs.tag
-        uses: softprops/action-gh-release@v1
+        if: steps.tag.outputs.tag != ''
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: "${{ steps.tag.outputs.tag }}"
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # -------------------------------
   # 3. TRIGGER DEVOPS WORKFLOW
   # -------------------------------
- 
   trigger-devops:
     name: Trigger blu-devops-updated workflow
     needs: bumpVersion
+    if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
     runs-on: ubuntu-latest
     steps:
-    - name: Dispatch event to devops repo
-      uses: peter-evans/repository-dispatch@v3
-      with:
-        token: ${{ secrets.GIT_TOKEN }}
-        repository: Biz-org/blu-devops-updated
-        event-type: trigger-workflow-blu-fms-backend
-        client-payload: |
-          {
-            "branch": "${{ github.ref_name }}",
-            "base_ref": "${{ github.event.pull_request.base.ref }}"
-          }
+      - name: Dispatch event to devops repo
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.GIT_TOKEN }}
+          repository: Biz-org/blu-devops-updated
+          event-type: trigger-workflow-blu-fms-backend
+          client-payload: |
+            {
+              "branch": "${{ github.ref_name }}",
+              "base_ref": "staging"
+            }
