@@ -1,5 +1,7 @@
 .git
+.github
 .gitignore
+docker/
 **/__pycache__
 **/*.pyc
 **/.DS_Store
