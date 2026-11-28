@@ -1,0 +1,29 @@
+# ============================================================
+# MODULE: Housekeeping Management
+# FILE:   housekeeping_management/requirements.txt
+# Odoo:   18.0 Community
+# ============================================================
+#
+# PYTHON / PyPI packages
+# ----------------------
+# None. This module needs no extra pip packages.
+# Use the main Odoo server requirements only:
+#   pip install -r odoo/requirements.txt
+#
+# ODOO ADDON DEPENDENCIES (standard modules only)
+# -----------------------------------------------
+# These match __manifest__.py "depends" and odoo_addons.txt
+#
+# REQUIRED:
+#   base
+#   web
+#   mail
+#
+# OPTIONAL (future integration, not required now):
+#   hr
+#   product
+#   stock
+#
+# INSTALL MODULE IN ODOO:
+#   -i housekeeping_management
+# ============================================================
