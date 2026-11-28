@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_wm_entry" model="ir.sequence">
+        <field name="name">Waste Entry</field>
+        <field name="code">wm.entry</field>
+        <field name="prefix">WM-ENTRY-</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_wm_segregation" model="ir.sequence">
+        <field name="name">Waste Segregation</field>
+        <field name="code">wm.segregation</field>
+        <field name="prefix">WM-SEG-</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_wm_collection" model="ir.sequence">
+        <field name="name">Collection Schedule</field>
+        <field name="code">wm.collection.schedule</field>
+        <field name="prefix">WM-COL-</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_wm_pickup" model="ir.sequence">
+        <field name="name">Pickup Tracking</field>
+        <field name="code">wm.pickup.tracking</field>
+        <field name="prefix">WM-PICK-</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_wm_vendor" model="ir.sequence">
+        <field name="name">Waste Vendor</field>
+        <field name="code">wm.vendor</field>
+        <field name="prefix">WM-VEN-</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_wm_recycling" model="ir.sequence">
+        <field name="name">Recycling</field>
+        <field name="code">wm.recycling</field>
+        <field name="prefix">WM-REC-</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_wm_disposal" model="ir.sequence">
+        <field name="name">Disposal</field>
+        <field name="code">wm.disposal</field>
+        <field name="prefix">WM-DISP-</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_wm_compliance" model="ir.sequence">
+        <field name="name">Compliance</field>
+        <field name="code">wm.compliance</field>
+        <field name="prefix">WM-COMP-</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_wm_audit" model="ir.sequence">
+        <field name="name">Waste Audit</field>
+        <field name="code">wm.audit</field>
+        <field name="prefix">WM-AUD-</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>

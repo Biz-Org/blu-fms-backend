@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_vc_app" model="ir.actions.client">
+        <field name="name">Vendor &amp; Contractor</field>
+        <field name="tag">vendor_and_contractor_management.app</field>
+    </record>
+
+    <menuitem id="menu_vc_root"
+              name="Vendor &amp; Contractor"
+              action="action_vc_app"
+              sequence="47"
+              groups="group_vc_user"/>
+</odoo>

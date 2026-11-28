@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="vc_vendor_abc" model="vc.vendor">
+        <field name="name">ABC Electrical Services</field>
+        <field name="code">VND-001</field>
+        <field name="category">electrical</field>
+        <field name="contact_person">Raj Mehta</field>
+        <field name="designation">Account Manager</field>
+        <field name="phone">+91 98765 43210</field>
+        <field name="email">raj.mehta@abcelectrical.com</field>
+        <field name="site">Main Facility</field>
+        <field name="gstin">27AABCU9603R1ZM</field>
+        <field name="pan">AABCU9603R</field>
+        <field name="services">Maintenance, Panel Work, Lighting, Emergency Response</field>
+        <field name="rating">4.5</field>
+        <field name="state">active</field>
+    </record>
+    <record id="vc_vendor_cleanpro" model="vc.vendor">
+        <field name="name">CleanPro Services</field>
+        <field name="code">VND-002</field>
+        <field name="category">housekeeping</field>
+        <field name="contact_person">Priya Shah</field>
+        <field name="phone">+91 90000 11111</field>
+        <field name="site">Corporate Office</field>
+        <field name="rating">4.2</field>
+        <field name="state">active</field>
+    </record>
+    <record id="vc_vendor_safeguard" model="vc.vendor">
+        <field name="name">SafeGuard Security</field>
+        <field name="code">VND-003</field>
+        <field name="category">security</field>
+        <field name="contact_person">Amit Kumar</field>
+        <field name="site">Main Facility</field>
+        <field name="rating">4.0</field>
+        <field name="state">pending_approval</field>
+    </record>
+
+    <record id="vc_contractor_safebuild" model="vc.contractor">
+        <field name="name">SafeBuild Services</field>
+        <field name="code">CTR-001</field>
+        <field name="contractor_type">civil</field>
+        <field name="work_category">Civil Works</field>
+        <field name="contact_person">Sneha Patil</field>
+        <field name="site">Main Facility</field>
+        <field name="state">active</field>
+    </record>
+    <record id="vc_contractor_cooltech" model="vc.contractor">
+        <field name="name">CoolTech HVAC</field>
+        <field name="code">CTR-002</field>
+        <field name="contractor_type">mechanical</field>
+        <field name="work_category">HVAC</field>
+        <field name="contact_person">Rahul Sharma</field>
+        <field name="site">Plant 2</field>
+        <field name="state">under_verification</field>
+    </record>
+
+    <record id="vc_worker_1" model="vc.worker">
+        <field name="name">Michael Chen</field>
+        <field name="code">W-4829</field>
+        <field name="contractor_id" ref="vc_contractor_safebuild"/>
+        <field name="skill">Electrician</field>
+        <field name="site">Main Facility</field>
+        <field name="state">active</field>
+    </record>
+    <record id="vc_worker_2" model="vc.worker">
+        <field name="name">Rajesh Kumar</field>
+        <field name="code">W-1042</field>
+        <field name="contractor_id" ref="vc_contractor_cooltech"/>
+        <field name="skill">HVAC Tech</field>
+        <field name="site">Main Facility</field>
+        <field name="state">active</field>
+    </record>
+    <record id="vc_worker_3" model="vc.worker">
+        <field name="name">Sarah Jenkins</field>
+        <field name="code">W-1158</field>
+        <field name="contractor_id" ref="vc_contractor_safebuild"/>
+        <field name="skill">Plumber</field>
+        <field name="site">North Facility</field>
+        <field name="state">on_leave</field>
+    </record>
+
+    <record id="vc_contract_abc_amc" model="vc.contract">
+        <field name="name">Annual Electrical Maintenance</field>
+        <field name="code">CON-2026-001</field>
+        <field name="contract_type">amc</field>
+        <field name="category">Facilities - Electrical</field>
+        <field name="vendor_id" ref="vc_vendor_abc"/>
+        <field name="site">HQ Campus</field>
+        <field name="date_start">2026-01-01</field>
+        <field name="date_end">2026-12-31</field>
+        <field name="value">1250000</field>
+        <field name="tax_amount">225000</field>
+        <field name="is_amc" eval="True"/>
+        <field name="has_sla" eval="True"/>
+        <field name="sla_response_hours">2</field>
+        <field name="sla_resolution_hours">8</field>
+        <field name="state">active</field>
+        <field name="department">Operations</field>
+    </record>
+    <record id="vc_contract_cleanpro" model="vc.contract">
+        <field name="name">Facility Cleaning Services 2026</field>
+        <field name="code">CON-2026-002</field>
+        <field name="contract_type">service</field>
+        <field name="vendor_id" ref="vc_vendor_cleanpro"/>
+        <field name="site">Corporate Office</field>
+        <field name="date_start">2026-01-01</field>
+        <field name="date_end">2026-06-30</field>
+        <field name="value">450000</field>
+        <field name="is_amc" eval="False"/>
+        <field name="has_sla" eval="True"/>
+        <field name="state">expiring</field>
+    </record>
+
+    <record id="vc_doc_gst" model="vc.document">
+        <field name="name">GST Certificate</field>
+        <field name="code">DOC-2026-001</field>
+        <field name="document_type">statutory</field>
+        <field name="vendor_id" ref="vc_vendor_abc"/>
+        <field name="site">Main Facility</field>
+        <field name="document_number">27AABCU9603R1ZM</field>
+        <field name="issue_date">2024-01-15</field>
+        <field name="has_expiry" eval="False"/>
+        <field name="state">verified</field>
+    </record>
+    <record id="vc_doc_insurance" model="vc.document">
+        <field name="name">Insurance Certificate</field>
+        <field name="code">DOC-2026-002</field>
+        <field name="document_type">insurance</field>
+        <field name="vendor_id" ref="vc_vendor_abc"/>
+        <field name="site">Main Facility</field>
+        <field name="expiry_date">2026-11-15</field>
+        <field name="state">verified</field>
+    </record>
+    <record id="vc_doc_labour" model="vc.document">
+        <field name="name">Labour License</field>
+        <field name="code">DOC-2026-003</field>
+        <field name="document_type">license</field>
+        <field name="vendor_id" ref="vc_vendor_abc"/>
+        <field name="expiry_date">2026-12-05</field>
+        <field name="state">expiring</field>
+    </record>
+
+    <record id="vc_att_1" model="vc.attendance">
+        <field name="worker_id" ref="vc_worker_1"/>
+        <field name="site">North Facility</field>
+        <field name="check_in">07:45 AM</field>
+        <field name="state">present</field>
+    </record>
+    <record id="vc_att_2" model="vc.attendance">
+        <field name="worker_id" ref="vc_worker_2"/>
+        <field name="site">North Facility</field>
+        <field name="check_in">08:20 AM</field>
+        <field name="state">late</field>
+    </record>
+    <record id="vc_att_3" model="vc.attendance">
+        <field name="worker_id" ref="vc_worker_3"/>
+        <field name="site">North Facility</field>
+        <field name="state">on_leave</field>
+    </record>
+
+    <record id="vc_pass_1" model="vc.daily.pass">
+        <field name="name">PASS-2026-0184</field>
+        <field name="worker_id" ref="vc_worker_2"/>
+        <field name="worker_name">Rajesh Kumar</field>
+        <field name="company">ABC Electrical Services</field>
+        <field name="vendor_id" ref="vc_vendor_abc"/>
+        <field name="site">Main Facility</field>
+        <field name="purpose">Electrical Maintenance</field>
+        <field name="pass_type">temporary</field>
+        <field name="validity_date">2026-08-19</field>
+        <field name="state">active</field>
+    </record>
+    <record id="vc_pass_2" model="vc.daily.pass">
+        <field name="name">PASS-2026-0185</field>
+        <field name="worker_name">Guest Technician</field>
+        <field name="company">SafeBuild Services</field>
+        <field name="contractor_id" ref="vc_contractor_safebuild"/>
+        <field name="site">Plant 2</field>
+        <field name="purpose">Inspection</field>
+        <field name="state">requested</field>
+    </record>
+
+    <record id="vc_ptw_1" model="vc.ptw">
+        <field name="name">PTW-2026-0048</field>
+        <field name="permit_type">electrical</field>
+        <field name="work_activity">Electrical Panel Maint.</field>
+        <field name="vendor_id" ref="vc_vendor_abc"/>
+        <field name="site">Main Facility</field>
+        <field name="risk_level">high</field>
+        <field name="validity_date">2026-08-19</field>
+        <field name="state">active</field>
+    </record>
+    <record id="vc_ptw_2" model="vc.ptw">
+        <field name="name">PTW-2026-0049</field>
+        <field name="permit_type">hot_work</field>
+        <field name="work_activity">HVAC Duct Welding</field>
+        <field name="contractor_id" ref="vc_contractor_cooltech"/>
+        <field name="site">Plant 2</field>
+        <field name="risk_level">critical</field>
+        <field name="state">pending_approval</field>
+    </record>
+</odoo>

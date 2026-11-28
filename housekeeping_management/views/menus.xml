@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_hk_dashboard" model="ir.actions.client">
+        <field name="name">Housekeeping Dashboard</field>
+        <field name="tag">housekeeping_management.dashboard</field>
+    </record>
+
+    <menuitem id="menu_hk_root"
+              name="Housekeeping"
+              action="action_hk_dashboard"
+              sequence="46"
+              groups="group_hk_user"/>
+</odoo>
