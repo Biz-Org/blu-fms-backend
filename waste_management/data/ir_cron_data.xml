@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="ir_cron_wm_compliance_expiry" model="ir.cron">
+        <field name="name">WM: Compliance Expiry Check</field>
+        <field name="model_id" ref="model_wm_compliance"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_check_expiry()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="ir_cron_wm_vendor_license" model="ir.cron">
+        <field name="name">WM: Vendor License Expiry</field>
+        <field name="model_id" ref="model_wm_vendor"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_scan_license_expiry()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="ir_cron_wm_collection_overdue" model="ir.cron">
+        <field name="name">WM: Overdue Collection Detection</field>
+        <field name="model_id" ref="model_wm_collection_schedule"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_mark_overdue()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

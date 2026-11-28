@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_vc_maintenance" model="ir.cron">
+        <field name="name">VC: Expiry, compliance and notifications</field>
+        <field name="model_id" ref="model_vc_cron"/>
+        <field name="state">code</field>
+        <field name="code">model.run_all_maintenance()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="ir_cron_vc_document_expiry" model="ir.cron">
+        <field name="name">VC: Document expiry scan</field>
+        <field name="model_id" ref="model_vc_document"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_scan_expiry()</field>
+        <field name="interval_number">12</field>
+        <field name="interval_type">hours</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="ir_cron_vc_contract_expiry" model="ir.cron">
+        <field name="name">VC: Contract expiry scan</field>
+        <field name="model_id" ref="model_vc_contract"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_scan_expiry()</field>
+        <field name="interval_number">12</field>
+        <field name="interval_type">hours</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="ir_cron_vc_pass_expiry" model="ir.cron">
+        <field name="name">VC: Daily pass expiry</field>
+        <field name="model_id" ref="model_vc_daily_pass"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_scan_expiry()</field>
+        <field name="interval_number">6</field>
+        <field name="interval_type">hours</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="ir_cron_vc_ptw_expiry" model="ir.cron">
+        <field name="name">VC: PTW expiry</field>
+        <field name="model_id" ref="model_vc_ptw"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_scan_expiry()</field>
+        <field name="interval_number">6</field>
+        <field name="interval_type">hours</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>
