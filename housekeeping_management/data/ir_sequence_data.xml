@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_hk_staff" model="ir.sequence">
+        <field name="name">Housekeeping Staff</field>
+        <field name="code">hk.staff</field>
+        <field name="prefix">HK-</field>
+        <field name="padding">3</field>
+    </record>
+    <record id="seq_hk_zone" model="ir.sequence">
+        <field name="name">Housekeeping Zone</field>
+        <field name="code">hk.zone</field>
+        <field name="prefix">ZN-</field>
+        <field name="padding">3</field>
+    </record>
+    <record id="seq_hk_task" model="ir.sequence">
+        <field name="name">Housekeeping Task</field>
+        <field name="code">hk.task</field>
+        <field name="prefix">TASK-%(year)s-</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_hk_schedule" model="ir.sequence">
+        <field name="name">Housekeeping Schedule</field>
+        <field name="code">hk.schedule</field>
+        <field name="prefix">SCH-</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_hk_consumable" model="ir.sequence">
+        <field name="name">Housekeeping Consumable</field>
+        <field name="code">hk.consumable</field>
+        <field name="prefix">CON-</field>
+        <field name="padding">3</field>
+    </record>
+</odoo>

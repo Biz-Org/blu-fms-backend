@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <function model="hk.dashboard" name="load_sample_data"/>
+</odoo>

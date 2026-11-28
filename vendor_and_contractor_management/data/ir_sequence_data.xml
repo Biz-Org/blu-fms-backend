@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_vc_vendor" model="ir.sequence">
+        <field name="name">Vendor</field>
+        <field name="code">vc.vendor</field>
+        <field name="prefix">VND-</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_vc_contractor" model="ir.sequence">
+        <field name="name">Contractor</field>
+        <field name="code">vc.contractor</field>
+        <field name="prefix">CTR-</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_vc_worker" model="ir.sequence">
+        <field name="name">Worker</field>
+        <field name="code">vc.worker</field>
+        <field name="prefix">W-</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_vc_contract" model="ir.sequence">
+        <field name="name">Contract</field>
+        <field name="code">vc.contract</field>
+        <field name="prefix">CON-</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_vc_document" model="ir.sequence">
+        <field name="name">Document</field>
+        <field name="code">vc.document</field>
+        <field name="prefix">DOC-</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_vc_attendance" model="ir.sequence">
+        <field name="name">Attendance</field>
+        <field name="code">vc.attendance</field>
+        <field name="prefix">ATT-</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_vc_daily_pass" model="ir.sequence">
+        <field name="name">Daily Pass</field>
+        <field name="code">vc.daily.pass</field>
+        <field name="prefix">PASS-</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_vc_ptw" model="ir.sequence">
+        <field name="name">Permit to Work</field>
+        <field name="code">vc.ptw</field>
+        <field name="prefix">PTW-</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_vc_site" model="ir.sequence">
+        <field name="name">Site</field>
+        <field name="code">vc.site</field>
+        <field name="prefix">SITE-</field>
+        <field name="padding">3</field>
+    </record>
+    <record id="seq_vc_activity" model="ir.sequence">
+        <field name="name">Activity</field>
+        <field name="code">vc.activity</field>
+        <field name="prefix">ACT-</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_vc_evaluation" model="ir.sequence">
+        <field name="name">Evaluation</field>
+        <field name="code">vc.evaluation</field>
+        <field name="prefix">EVAL-</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_vc_sla_breach" model="ir.sequence">
+        <field name="name">SLA Breach</field>
+        <field name="code">vc.sla.breach</field>
+        <field name="prefix">SLA-</field>
+        <field name="padding">4</field>
+    </record>
+</odoo>
